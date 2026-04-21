@@ -149,110 +149,110 @@ export default function App() {
       : 'bg-linear-to-br from-[#dc2626] to-[#b91c1c]';
 
     return (
-      <div className={`flex-1 relative overflow-hidden rounded-[16px] sm:rounded-[24px] shadow-[0_20px_25px_-5px_rgba(0,0,0,0.3)] flex flex-col ${bgGradient} transition-all duration-500`}>
-        {/* Serve Indicator */}
-        <AnimatePresence>
-          {isServing && (
-            <motion.div
-              initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0, opacity: 0 }}
-              className="absolute top-2 right-2 sm:top-5 sm:right-5 z-10 w-6 h-6 sm:w-10 sm:h-10 bg-[#facc15] text-black rounded-full flex items-center justify-center font-bold text-xs sm:text-base shadow-[0_0_20px_rgba(250,204,21,0.5)]"
-            >
-              S
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Score Area - Massive but controlled by vh */}
-        <div 
-          className="flex-1 flex flex-col items-center justify-center cursor-pointer select-none group relative overflow-hidden"
-          onClick={() => updateScore(side, 1)}
-        >
-          <motion.div
-            key={score}
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className="text-[40vh] sm:text-[55vh] lg:text-[22rem] font-extrabold text-white leading-none tabular-nums drop-shadow-[0_10px_20px_rgba(0,0,0,0.2)]"
-          >
-            {score}
-          </motion.div>
-
-          {/* Decrease button - visible but unobtrusive */}
-          <div 
-            className="absolute bottom-0 left-0 right-0 h-[25%] flex items-center justify-center opacity-0 group-hover:opacity-40 hover:bg-black/5 transition-all z-10"
-            onClick={(e) => { e.stopPropagation(); updateScore(side, -1); }}
-          >
-            <ChevronDown size={32} className="text-white" />
-          </div>
-        </div>
-
-        {/* Sets & Timeouts - Very compact in landscape */}
-        <div className="py-3 sm:pb-10 space-y-3 sm:space-y-8 shrink-0 bg-black/5">
-          {/* Set Dots */}
-          <div className="flex justify-center gap-3 sm:gap-5">
-            {[...Array(3)].map((_, i) => (
-              <div 
-                key={i}
-                onClick={(e) => { e.stopPropagation(); updateSets(side, i < sets ? -1 : 1); }}
-                className={`w-4 h-4 sm:w-8 sm:h-8 rounded-full border-2 border-white/40 cursor-pointer transition-all ${
-                  i < sets ? 'bg-white shadow-[0_0_15px_#fff]' : 'bg-white/20'
-                }`}
-              />
-            ))}
-          </div>
-
-          {/* Timeout Ticks */}
-          <div className="flex justify-center gap-2 sm:gap-3">
+      <div className={`flex-1 relative overflow-hidden rounded-[16px] sm:rounded-[32px] shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col ${bgGradient} transition-all duration-500`}>
+        {/* Indicators Overlay (Top) */}
+        <div className="absolute top-2 left-2 right-2 flex justify-between items-start pointer-events-none z-20">
+          {/* Timeout Ticks (Top Left) */}
+          <div className="flex gap-1.5 p-1 bg-black/10 rounded-full backdrop-blur-xs">
             {[...Array(2)].map((_, i) => (
               <div
                 key={i}
                 onClick={(e) => { e.stopPropagation(); if (i < timeouts) toggleTimeout(side); }}
-                className={`w-[25px] sm:w-[50px] h-[4px] sm:h-[8px] rounded-[4px] border border-white/5 cursor-pointer transition-all ${
-                  i < (2-timeouts) ? 'bg-white/30' : 'bg-white'
+                className={`w-[15px] sm:w-[30px] h-[4px] sm:h-[8px] rounded-full border border-white/5 cursor-pointer pointer-events-auto transition-all ${
+                  i < (2-timeouts) ? 'bg-white/20' : 'bg-white shadow-[0_0_8px_#fff]'
                 }`}
               />
             ))}
           </div>
+
+          {/* Serve Indicator (Top Right) */}
+          <AnimatePresence>
+            {isServing && (
+              <motion.div
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0, opacity: 0 }}
+                className="w-6 h-6 sm:w-12 sm:h-12 bg-[#facc15] text-black rounded-full flex items-center justify-center font-black text-[10px] sm:text-sm shadow-[0_0_20px_rgba(250,204,21,0.6)]"
+              >
+                S
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* Score Area - Centralized and maximized */}
+        <div 
+          className="flex-1 flex flex-col items-center justify-center cursor-pointer select-none group relative pt-4"
+          onClick={() => updateScore(side, 1)}
+        >
+          <motion.div
+            key={score}
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            className="text-[42vh] sm:text-[50vh] font-black text-white leading-none tabular-nums drop-shadow-[0_10px_30px_rgba(0,0,0,0.4)]"
+          >
+            {score}
+          </motion.div>
+
+          {/* Decrease button - Bottom zone overlay */}
+          <div 
+            className="absolute bottom-0 left-0 right-0 h-[35%] flex items-center justify-center opacity-0 group-hover:opacity-40 hover:bg-black/10 transition-all z-10"
+            onClick={(e) => { e.stopPropagation(); updateScore(side, -1); }}
+          >
+            <ChevronDown size={48} className="text-white drop-shadow-sm" />
+          </div>
+        </div>
+
+        {/* Set Dots (Bottom Overlay) */}
+        <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-2 sm:gap-4 pointer-events-none z-20">
+          {[...Array(3)].map((_, i) => (
+            <div 
+              key={i}
+              onClick={(e) => { e.stopPropagation(); updateSets(side, i < sets ? -1 : 1); }}
+              className={`w-3 h-3 sm:w-6 sm:h-6 rounded-full border-2 border-white/40 cursor-pointer pointer-events-auto transition-all ${
+                i < sets ? 'bg-white shadow-[0_0_15px_rgba(255,255,255,0.8)]' : 'bg-white/20'
+              }`}
+            />
+          ))}
         </div>
       </div>
     );
   };
 
   return (
-    <div className="h-screen bg-[#0f172a] text-white flex flex-col font-sans overflow-hidden p-3 sm:p-5 box-border">
+    <div className="h-screen bg-[#020617] text-white flex flex-col font-sans overflow-hidden p-2 sm:p-4 box-border">
       {/* Portrait Orientation Hint */}
-      <div className="fixed inset-0 z-[100] bg-[#0f172a] flex flex-col items-center justify-center p-10 text-center sm:hidden portrait:flex hidden">
+      <div className="fixed inset-0 z-[100] bg-[#020617] flex flex-col items-center justify-center p-10 text-center sm:hidden portrait:flex hidden">
         <motion.div
-          animate={{ rotate: 90 }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          className="mb-8 p-6 bg-slate-800 rounded-3xl"
+          animate={{ scale: [1, 1.1, 1] }}
+          transition={{ duration: 2, repeat: Infinity }}
+          className="mb-8 p-8 bg-slate-900 rounded-[40px] border border-slate-800"
         >
-          <ArrowLeftRight size={64} className="text-[#facc15]" />
+          <ArrowLeftRight size={80} className="text-[#facc15]" />
         </motion.div>
-        <h3 className="text-2xl font-black mb-4">建議旋轉螢幕</h3>
-        <p className="text-slate-400 font-medium">使用橫向模式以獲得最佳計分體驗</p>
+        <h3 className="text-3xl font-black mb-4">建議旋轉設備</h3>
+        <p className="text-slate-500 text-lg">使用橫向模式以獲得最佳視野</p>
       </div>
 
-      {/* Header - Highly simplified */}
-      <header className="flex justify-between items-center h-[35px] sm:h-[50px] mb-2 sm:mb-4 px-2">
-        <div className="bg-[#1e293b] border border-[#334155] rounded-full px-4 sm:px-6 py-1 text-[#94a3b8] font-bold text-xs sm:text-base tracking-widest uppercase">
+      {/* Header - Auto-height flex row */}
+      <header className="flex-none flex justify-between items-center px-2 py-1 sm:py-2">
+        <div className="bg-white/5 border border-white/10 rounded-full px-3 py-1 text-[#94a3b8] font-black text-[10px] sm:text-xs tracking-widest uppercase">
           SET {state.setsA + state.setsB + 1}
         </div>
         
-        <div className="flex items-center gap-6 sm:gap-12 text-sm sm:text-xl font-black text-slate-400">
+        <div className="flex items-center gap-6 sm:gap-12 text-xs sm:text-lg font-black text-slate-500">
            <span className={state.setsA > state.setsB ? 'text-[#3b82f6]' : ''}>SETS {state.setsA}</span>
-           <span className="text-xs opacity-30">|</span>
+           <span className="opacity-20 text-[10px]">|</span>
            <span className={state.setsB > state.setsA ? 'text-[#ef4444]' : ''}>SETS {state.setsB}</span>
         </div>
 
-        <div className="bg-[#1e293b] border border-[#334155] rounded-full px-4 sm:px-6 py-1 text-[#94a3b8] font-bold text-xs sm:text-base tabular-nums">
+        <div className="text-slate-600 font-bold text-[10px] sm:text-sm tabular-nums">
           {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}
         </div>
       </header>
 
-      {/* Scoreboard Area */}
-      <main className="flex-1 flex gap-2 sm:gap-5 relative">
+      {/* Scoreboard Area - Flex-1 with horizontal gap */}
+      <main className="flex-1 flex gap-2 sm:gap-4 relative my-1 sm:my-2 overflow-hidden">
         <TeamPanel side={isSwapped ? 'B' : 'A'} color={isSwapped ? 'red' : 'blue'} />
         <TeamPanel side={isSwapped ? 'A' : 'B'} color={isSwapped ? 'blue' : 'red'} />
 
@@ -260,17 +260,17 @@ export default function App() {
         <AnimatePresence>
           {timeoutTimer !== null && (
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
+              initial={{ opacity: 0, scale: 1.1 }}
               animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              className="absolute inset-0 z-30 flex items-center justify-center pointer-events-none"
+              exit={{ opacity: 0, scale: 1.1 }}
+              className="absolute inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4"
             >
-              <div className="bg-slate-900/95 backdrop-blur-xl rounded-[20px] sm:rounded-[40px] p-8 sm:p-16 shadow-[0_0_100px_rgba(0,0,0,0.5)] border border-slate-700 flex flex-col items-center gap-2 sm:gap-6 pointer-events-auto">
-                <span className="text-xs sm:text-xl uppercase font-black tracking-[0.4em] text-[#facc15]">Timeout</span>
-                <span className="text-7xl sm:text-[10rem] leading-none font-black text-white">{timeoutTimer}</span>
+              <div className="bg-slate-900 rounded-[30px] sm:rounded-[60px] p-8 sm:p-20 shadow-[0_0_100px_rgba(0,0,0,1)] border border-slate-700 flex flex-col items-center gap-2 sm:gap-6 pointer-events-auto">
+                <span className="text-xs sm:text-xl uppercase font-black tracking-[0.6em] text-[#facc15]">Timeout</span>
+                <span className="text-8xl sm:text-[15rem] leading-none font-black text-white">{timeoutTimer}</span>
                 <button 
                   onClick={() => setTimeoutTimer(null)}
-                  className="mt-2 sm:mt-4 px-6 py-2 sm:px-10 sm:py-4 bg-[#facc15] text-black rounded-xl sm:rounded-2xl font-black uppercase text-xs sm:text-lg hover:brightness-110 transition-all"
+                  className="mt-2 sm:mt-10 px-8 py-3 sm:px-16 sm:py-6 bg-white text-black rounded-3xl font-black uppercase text-xs sm:text-xl hover:bg-[#facc15] transition-all"
                 >
                   Dismiss
                 </button>
@@ -280,35 +280,35 @@ export default function App() {
         </AnimatePresence>
       </main>
 
-      {/* Control Bar - Simplified */}
-      <div className="h-[50px] sm:h-[100px] flex justify-center items-center gap-2 sm:gap-6 mt-2 sm:mt-4 grow-0">
+      {/* Control Actions - Responsive row */}
+      <div className="flex-none grid grid-cols-4 gap-2 sm:gap-4 pt-1">
         <button 
           onClick={undo}
           disabled={history.length === 0}
-          className="bg-[#1e293b] border border-[#334155] text-white px-4 sm:px-10 py-2 sm:py-4 rounded-xl sm:rounded-2xl min-w-[70px] sm:min-w-[150px] transition-all disabled:opacity-20 flex flex-col items-center justify-center"
+          className="bg-white/5 border border-white/10 text-white rounded-xl sm:rounded-2xl py-2 sm:py-4 font-black text-[10px] sm:text-sm active:scale-95 disabled:opacity-20"
         >
-          <span className="text-xs sm:text-lg font-bold">UNDO</span>
+          UNDO
         </button>
 
         <button 
           onClick={() => setIsSwapped(!isSwapped)}
-          className="bg-[#1e293b] border border-[#334155] text-white px-4 sm:px-10 py-2 sm:py-4 rounded-xl sm:rounded-2xl min-w-[70px] sm:min-w-[150px] transition-all flex flex-col items-center justify-center"
+          className="bg-white/5 border border-white/10 text-white rounded-xl sm:rounded-2xl py-2 sm:py-4 font-black text-[10px] sm:text-sm active:scale-95"
         >
-          <span className="text-xs sm:text-lg font-bold">SWAP</span>
+          SWAP
         </button>
 
         <button 
           onClick={resetSet}
-          className="bg-[#1e293b] border border-[#334155] text-white px-4 sm:px-10 py-2 sm:py-4 rounded-xl sm:rounded-2xl min-w-[70px] sm:min-w-[150px] transition-all hover:bg-[#2d3a4f] flex flex-col items-center justify-center"
+          className="bg-white/10 border border-white/20 text-[#facc15] rounded-xl sm:rounded-2xl py-2 sm:py-4 font-black text-[10px] sm:text-sm active:scale-95"
         >
-          <span className="text-xs sm:text-lg font-bold">NEXT SET</span>
+          NEXT SET
         </button>
 
         <button 
           onClick={resetMatch}
-          className="bg-[#1e293b] border border-[#334155] text-white px-4 sm:px-10 py-2 sm:py-4 rounded-xl sm:rounded-2xl min-w-[70px] sm:min-w-[150px] opacity-50 hover:opacity-100 transition-all flex flex-col items-center justify-center"
+          className="bg-white/5 border border-white/10 text-slate-500 rounded-xl sm:rounded-2xl py-2 sm:py-4 font-black text-[10px] sm:text-sm active:scale-95"
         >
-          <span className="text-xs sm:text-lg font-bold">RESET</span>
+          RESET
         </button>
       </div>
     </div>
