@@ -1,0 +1,6 @@
+{
+  "name": "排球計分板 (Volleyball Scoreboard)",
+  "description": "一個專業且美觀的排球計分板，支援局數紀錄、換邊、暫停計時及歷史紀錄功能。",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}
