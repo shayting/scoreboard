@@ -299,9 +299,9 @@ export default function App() {
 
         <button 
           onClick={resetSet}
-          className="bg-[#facc15] text-black font-black px-6 sm:px-14 py-2 sm:py-5 rounded-xl sm:rounded-2xl min-w-[100px] sm:min-w-[200px] shadow-[0_0_30px_rgba(250,204,21,0.2)] transition-all hover:scale-105 flex flex-col items-center justify-center"
+          className="bg-[#1e293b] border border-[#334155] text-white px-4 sm:px-10 py-2 sm:py-4 rounded-xl sm:rounded-2xl min-w-[70px] sm:min-w-[150px] transition-all hover:bg-[#2d3a4f] flex flex-col items-center justify-center"
         >
-          <span className="text-xs sm:text-xl font-black uppercase whitespace-nowrap">Next Set</span>
+          <span className="text-xs sm:text-lg font-bold">NEXT SET</span>
         </button>
 
         <button 
